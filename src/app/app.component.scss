@@ -1,0 +1,26 @@
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr 50px;
+  height: 100vh;
+}
+
+.header {
+  padding: 2rem;
+  grid-row: 1;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  grid-row: 2;
+  overflow: auto;
+}
+
+.footer {
+  grid-row: 3;
+}
+
+.container {
+  flex: 0 1 800px;
+}
