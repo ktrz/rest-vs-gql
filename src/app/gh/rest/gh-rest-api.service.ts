@@ -2,11 +2,51 @@ import {Injectable} from '@angular/core';
 import {GhApiService, User} from '../gh-api.service';
 import {users} from '../mock-users';
 
+interface RestApiSearchUser {
+  login: string;
+  name: string;
+  avatar_url: string;
+}
+
+interface RestApiUser {
+  login: string;
+  name: string;
+  avatar_url: string;
+  followers: number;
+  public_gists: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class GhRestApiService implements GhApiService {
   async getUsers(search: string): Promise<User[]> {
-    return users;
+    if (!search) {
+      return users;
+    }
+    const searchUsersResult = await this.get(`https://api.github.com/search/users?q=${search}&per_page=10`);
+    const searchUsers: RestApiSearchUser[] = searchUsersResult.items;
+
+    const usersResult: RestApiUser[] = await Promise.all(searchUsers.map(({login}) => this.get(`https://api.github.com/users/${login}`)));
+
+
+    return usersResult.map(searchUser => ({
+      login: searchUser.login,
+      name: searchUser.name,
+      avatarUrl: searchUser.avatar_url,
+      followersCount: searchUser.followers,
+      gistsCount: searchUser.public_gists
+    }));
+  }
+
+  private async get(url: string): Promise<any> {
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `token ${localStorage.getItem('ghToken')}`
+      },
+    });
+
+    return await response.json();
   }
 }

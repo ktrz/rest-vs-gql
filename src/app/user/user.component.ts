@@ -9,6 +9,8 @@ import {User} from '../gh/gh-api.service';
         <img mat-card-avatar [src]="user.avatarUrl">
         <mat-card-title>{{user.login}}</mat-card-title>
         <mat-card-subtitle>{{user.name}}</mat-card-subtitle>
+        <mat-card-subtitle>Followers: {{user.followersCount}}</mat-card-subtitle>
+        <mat-card-subtitle>Gists: {{user.gistsCount}}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
   `,
