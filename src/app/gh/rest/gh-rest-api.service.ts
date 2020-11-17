@@ -1,20 +1,7 @@
 import {Injectable} from '@angular/core';
 import {GhApiService, User} from '../gh-api.service';
 import {users} from '../mock-users';
-
-interface RestApiSearchUser {
-  login: string;
-  name: string;
-  avatar_url: string;
-}
-
-interface RestApiUser {
-  login: string;
-  name: string;
-  avatar_url: string;
-  followers: number;
-  public_gists: number;
-}
+import {RestApiSearchUser, RestApiUser} from './gh-rest-user.model';
 
 @Injectable({
   providedIn: 'root'

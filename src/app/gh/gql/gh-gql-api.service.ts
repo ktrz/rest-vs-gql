@@ -10,34 +10,8 @@ import {
   Operation
 } from '@apollo/client/core';
 import {GhApiService, User} from '../gh-api.service';
+import {GqlApiResult} from './gh-gql-user.model';
 import {SearchUsers} from './user.graphql';
-
-interface PageInfo {
-  hasNextPage: boolean;
-  endCursor: string;
-}
-
-interface UserNode {
-  login: string;
-  name: string;
-  avatarUrl: string;
-  followers: {
-    totalCount: number
-  };
-  gists: {
-    totalCount: number;
-  };
-}
-
-interface UserSearch {
-  userCount: number;
-  pageInfo: PageInfo;
-  nodes: UserNode[];
-}
-
-interface GqlApiResult {
-  search: UserSearch;
-}
 
 
 @Injectable({
